@@ -3,18 +3,29 @@ package com.example.gauravgoyal.kotlintricks
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.TextView
+import com.example.gauravgoyal.kotlintricks.lazyloading.Group
+import com.example.gauravgoyal.kotlintricks.lifecycle.Person
+import com.example.gauravgoyal.kotlintricks.lifecycle.compareTo
+import com.example.gauravgoyal.kotlintricks.lifecycle.plus
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        const val tag = "Kotlin"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-            text.setText("I have been accessed without using findViewById")
-            text.setOnClickListener {
-                Log.d("Kotlin", "I have been clicked")
-            }
+        text.setText("I have been accessed without using findViewById")
+        text.setOnClickListener {
+            Log.d(tag, "I have been clicked")
+        }
 
 
 
@@ -22,14 +33,51 @@ class MainActivity : AppCompatActivity() {
         callHigherOrderFunction()
 
 
-        Log.d("Kotlin", "Length of 2 is " + 2.getLength())
-        Log.d("Kotlin", "Length of Length is " + "Length".getLength())
+        Log.d(tag, "Length of 2 is " + 2.getLength())
+        Log.d(tag, "Length of Length is " + "Length".getLength())
 
 
         // null pointer exception
         gettingRidOfNull()
 
 
+        // operator overloading
+        operatorOverloading()
+
+        //calling mapping functions
+        collections()
+
+
+        //function call with default parameter and parameter name
+        var sum = addTwoDigits(2, 3)
+        sum = addTwoDigits(second = 2)
+
+        // lazy loading
+        val group1 = Group()
+        group1.name = "group name"
+        Log.d(tag, group1.people.toString())
+    }
+
+
+    fun collections() {
+
+        class Person(val name: String, val age: Int)
+
+        var listOfPerson = mutableListOf<Person>()
+        listOfPerson.add(Person("A", 18))
+        listOfPerson.plus(Person("C", 14))
+        listOfPerson.plus(Person("D", 16))
+
+        val sortedList = listOfPerson.sortedWith(compareBy { it.age;it.name })
+
+
+        val list = listOf(1, 2, 3).filter { it != 2 }.map { it * 2 }.sortedWith(compareBy { it })
+
+        Log.d(tag, "collections")
+
+
+        val people = ArrayList<com.example.gauravgoyal.kotlintricks.lifecycle.Person>()
+        people.add(Person(23, "sdd"))
     }
 
 
@@ -67,7 +115,7 @@ class MainActivity : AppCompatActivity() {
 
 
         // if you are sure that a wont be null then this expression wont check if a is null
-        val d = a!!.length
+        //val d = a!!.length
     }
 
 
@@ -75,5 +123,48 @@ class MainActivity : AppCompatActivity() {
         number / div
     }
 
+    fun operatorOverloading() {
+        val p1 = Person(20, "A")
+        val p2 = Person(22, "C")
+
+        val totalAge = p1 + p2
+
+        val p1IsGreater = p1 > p2
+
+
+    }
+
+    fun updateText(textView: TextView) {
+        with(textView) {
+            visibility = View.VISIBLE
+            text = "Hello world"
+            setOnClickListener {
+                // Do stuff
+            }
+        }
+    }
+
+    fun updateText1(textView: TextView?) {
+        textView?.apply {
+            visibility = View.VISIBLE
+            text = "Hello world"
+            setOnClickListener {
+                // Do stuff
+            }
+        }
+    }
+
+    fun defineMap() {
+        val map = mutableMapOf(
+                "keyA" to "valueA",
+                "keyB" to "valueB",
+                "keyC" to "valueC"
+        )
+        map.put("keyD", "valueD")
+    }
+
+    fun addTwoDigits(first: Int = 1, second: Int): Int {
+        return first + second
+    }
 
 }

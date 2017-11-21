@@ -14,3 +14,13 @@ fun String?.convertToString(): String {
         return this.toString();
 }
 
+fun Int.isPrime(): Boolean {
+    if (this <= 1) return false
+
+    // Check from 2 to n-1
+    for (i in 2 until this)
+        if (this % i === 0)
+            return false
+
+    return true
+}
