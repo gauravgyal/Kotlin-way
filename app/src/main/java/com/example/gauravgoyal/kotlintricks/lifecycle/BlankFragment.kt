@@ -28,8 +28,6 @@ class BlankFragment : Fragment() {
     val tag_ ="LifeCycleEvent"
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(tag_,"onFragmentCreate")

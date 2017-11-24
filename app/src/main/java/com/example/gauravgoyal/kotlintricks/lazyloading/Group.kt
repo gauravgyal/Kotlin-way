@@ -6,7 +6,9 @@ package com.example.gauravgoyal.kotlintricks.lazyloading
 
 class Group {
     var name: String = ""
-    val people by lazy { getPeople(this) }
+    val people by lazy {
+        println("computing")
+        getPeople(this) }
 }
 
 fun getPeople(group: Group): List<String> {

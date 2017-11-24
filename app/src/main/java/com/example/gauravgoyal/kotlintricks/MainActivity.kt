@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import com.example.gauravgoyal.kotlintricks.lazyloading.Group
 import com.example.gauravgoyal.kotlintricks.lifecycle.Person
 import com.example.gauravgoyal.kotlintricks.lifecycle.compareTo
@@ -23,10 +24,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         text.setText("I have been accessed without using findViewById")
-        text.setOnClickListener {
-            Log.d(tag, "I have been clicked")
-        }
 
+        // defining properties and action of view
+        updateText(text)
 
 
         callExtensionFunction()
@@ -44,40 +44,52 @@ class MainActivity : AppCompatActivity() {
         // operator overloading
         operatorOverloading()
 
+        // lazy loading
+        val group1 = Group()
+        println(group1.people.toString())
+        println(group1.people.toString())
+
+
         //calling mapping functions
-        collections()
+        mappingFunctions()
 
 
         //function call with default parameter and parameter name
         var sum = addTwoDigits(2, 3)
         sum = addTwoDigits(second = 2)
 
-        // lazy loading
-        val group1 = Group()
-        group1.name = "group name"
-        Log.d(tag, group1.people.toString())
+        // intiallizing map
+        defineMap()
+
+
     }
 
 
-    fun collections() {
-
+    fun mappingFunctions() {
         class Person(val name: String, val age: Int)
 
         var listOfPerson = mutableListOf<Person>()
         listOfPerson.add(Person("A", 18))
-        listOfPerson.plus(Person("C", 14))
-        listOfPerson.plus(Person("D", 16))
+        listOfPerson.add(Person("E", 14))
+        listOfPerson.add(Person("C", 14))
+        listOfPerson.add(Person("D", 16))
 
-        val sortedList = listOfPerson.sortedWith(compareBy { it.age;it.name })
-
+        val sortedList = listOfPerson.sortedWith(compareBy({ it.age }, { it.name }))
+        println(sortedList.toString())
 
         val list = listOf(1, 2, 3).filter { it != 2 }.map { it * 2 }.sortedWith(compareBy { it })
+        println(list.toString())
 
-        Log.d(tag, "collections")
+        val takeList = list.take(1)
+        println(takeList)
 
 
-        val people = ArrayList<com.example.gauravgoyal.kotlintricks.lifecycle.Person>()
-        people.add(Person(23, "sdd"))
+        val flatMapList = list.flatMap { listOf(it, it + 1) }
+        println(flatMapList)
+
+
+        val groupByList = flatMapList.groupBy { if (it % 2 == 0) "even" else "odd" }
+        println(groupByList)
     }
 
 
@@ -128,9 +140,10 @@ class MainActivity : AppCompatActivity() {
         val p2 = Person(22, "C")
 
         val totalAge = p1 + p2
+        Log.d(tag, totalAge.toString())
 
         val p1IsGreater = p1 > p2
-
+        Log.d(tag, p1IsGreater.toString())
 
     }
 
@@ -139,20 +152,11 @@ class MainActivity : AppCompatActivity() {
             visibility = View.VISIBLE
             text = "Hello world"
             setOnClickListener {
-                // Do stuff
+                println("text is clicked")
             }
         }
     }
 
-    fun updateText1(textView: TextView?) {
-        textView?.apply {
-            visibility = View.VISIBLE
-            text = "Hello world"
-            setOnClickListener {
-                // Do stuff
-            }
-        }
-    }
 
     fun defineMap() {
         val map = mutableMapOf(
