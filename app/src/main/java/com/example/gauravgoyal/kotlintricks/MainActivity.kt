@@ -6,7 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import com.example.gauravgoyal.kotlintricks.lazyloading.Group
+import com.example.gauravgoyal.kotlintricks.lazyloading.Team
 import com.example.gauravgoyal.kotlintricks.lifecycle.Person
 import com.example.gauravgoyal.kotlintricks.lifecycle.compareTo
 import com.example.gauravgoyal.kotlintricks.lifecycle.plus
@@ -45,9 +45,9 @@ class MainActivity : AppCompatActivity() {
         operatorOverloading()
 
         // lazy loading
-        val group1 = Group()
-        println(group1.people.toString())
-        println(group1.people.toString())
+        val team = Team()
+        println(team.players.toString())
+        println(team.players.toString())
 
 
         //calling mapping functions
